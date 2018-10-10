@@ -4,6 +4,9 @@
 package cc.p1;
 
 /**
+ * Class which represents a state of a Pushdown Automaton. The state can be an
+ * accepting state. Each state has an unique identifier.
+ * 
  * @author Daute Rodríguez Rodríguez (alu0100973914@ull.edu.es)
  * @version 1.0
  * @since 7 oct. 2018
@@ -19,7 +22,7 @@ public class State
 	 * Constructor
 	 * 
 	 * @param id
-	 *          state identifier
+	 *            state identifier
 	 */
 	public State(String id)
 	{

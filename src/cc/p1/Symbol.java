@@ -4,6 +4,10 @@
 package cc.p1;
 
 /**
+ * Class which represents a symbol of a Pushdown Automaton alphabet. The symbol
+ * could be terminal or non terminal. It's nature conditions the alphabet to
+ * which it may belong.
+ * 
  * @author Daute Rodríguez Rodríguez (alu0100973914@ull.edu.es)
  * @version 1.0
  * @since 7 oct. 2018
@@ -17,7 +21,7 @@ public class Symbol
 	};
 
 	/** Symbol */
-	Character		symbol;
+	Character	symbol;
 	/** Type of the symbol */
 	SymbolType	type;
 
