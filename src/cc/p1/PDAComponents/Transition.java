@@ -1,7 +1,7 @@
 /**
  * File containing the Transition entity definition. 
  */
-package cc.p1;
+package cc.p1.PDAComponents;
 
 /**
  * Class which represents a transition of a Pushdown Automaton. Each transition
@@ -23,6 +23,8 @@ public class Transition
 	Symbol		requiredTopStackSymbol;
 	/** Stack symbols to introduce */
 	Symbol[]	newTopStackSymbols;
+	/** Identifies each transition */
+	int transitionID;
 
 	/**
 	 * Constructor
@@ -35,13 +37,30 @@ public class Transition
 	 */
 	public Transition(State originState, State destinationState,
 			Symbol inputSymbol, Symbol topStackSymbol,
-			Symbol[] newTopStackSymbols)
+			Symbol[] newTopStackSymbols, int transitionID)
 	{
+		if (inputSymbol.getType() != Symbol.SymbolType.TERMINAL)
+		{
+			throw new IllegalArgumentException("The input symbol must be terminal");
+		} else if (requiredTopStackSymbol.getType() != Symbol.SymbolType.NON_TERMINAL)
+		{
+			throw new IllegalArgumentException("The required top stack symbol must be non terminal");
+		}
+		
+		for(Symbol symbol: newTopStackSymbols)
+		{
+			if (symbol.getType() != Symbol.SymbolType.NON_TERMINAL)
+			{
+				throw new IllegalArgumentException("The new top stack symbols must be non terminal");
+			}
+		}
+		
 		this.originState = originState;
 		this.destinationState = destinationState;
 		this.inputSymbol = inputSymbol;
 		this.requiredTopStackSymbol = topStackSymbol;
 		this.newTopStackSymbols = newTopStackSymbols;
+		this.transitionID = transitionID;
 	}
 
 	/**

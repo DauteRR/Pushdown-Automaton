@@ -1,7 +1,7 @@
 /**
  * File containing the Alphabet entity definition. 
  */
-package cc.p1;
+package cc.p1.PDAComponents;
 
 import java.util.Comparator;
 import java.util.TreeSet;
@@ -48,7 +48,7 @@ public class Alphabet
 	 */
 	public void addSymbol(Symbol newSymbol)
 	{
-		if (!allowNonTerminalSymbols && newSymbol.type == Symbol.SymbolType.NON_TERMINAL)
+		if (!allowNonTerminalSymbols && newSymbol.getType() == Symbol.SymbolType.NON_TERMINAL)
 		{
 			throw new IllegalArgumentException(
 					"Trying to add a non terminal symbol to an alphabet which doesn't admit them");

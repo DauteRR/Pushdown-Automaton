@@ -1,7 +1,7 @@
 /**
  * File containing the Stack entity definition. 
  */
-package cc.p1;
+package cc.p1.PDAComponents;
 
 /**
  * Class which represents the stack of the Pushdown Automaton.
