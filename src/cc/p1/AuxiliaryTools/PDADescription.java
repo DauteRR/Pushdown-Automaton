@@ -3,12 +3,13 @@
  */
 package cc.p1.AuxiliaryTools;
 
+import cc.p1.PDAComponents.InputTape;
 import cc.p1.PDAComponents.Stack;
 import cc.p1.PDAComponents.State;
 
 /**
- * Class which represents the configuration of a Pushdown Automaton
- * at a specific given time.
+ * Class which represents the configuration of a Pushdown Automaton at a
+ * specific given time.
  * 
  * @author Daute Rodríguez Rodríguez (alu0100973914@ull.edu.es)
  * @version 1.0
@@ -17,30 +18,31 @@ import cc.p1.PDAComponents.State;
 public class PDADescription
 {
 	/** Represents the current state */
-	State currentState;
-	/** Position of the input tape header */
-	int inputTapeHeaderPosition;
+	State		currentState;
+	/** Input tape */
+	InputTape	inputTape;
 	/** Stack of the automaton */
-	Stack stack;
-	
+	Stack		stack;
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param currentState
-	 * @param inputTapeHeaderPosition
+	 * @param inputTape
 	 * @param stack
 	 */
-	public PDADescription(State currentState,
-			int inputTapeHeaderPosition, Stack stack)
+	public PDADescription(State currentState, InputTape inputTape,
+			Stack stack)
 	{
 		super();
 		this.currentState = currentState;
-		this.inputTapeHeaderPosition = inputTapeHeaderPosition;
+		this.inputTape = inputTape;
 		this.stack = stack;
 	}
 
 	/**
 	 * Getter method for currentState attribute.
+	 * 
 	 * @return currentState
 	 */
 	public State getCurrentState()
@@ -49,20 +51,37 @@ public class PDADescription
 	}
 
 	/**
-	 * Getter method for inputTapeHeaderPosition attribute.
-	 * @return inputTapeHeaderPosition
+	 * Getter method for inputTape attribute.
+	 * 
+	 * @return inputTape
 	 */
-	public int getInputTapeHeaderPosition()
+	public InputTape getInputTape()
 	{
-		return inputTapeHeaderPosition;
+		return inputTape;
 	}
 
 	/**
 	 * Getter method for stack attribute.
+	 * 
 	 * @return stack
 	 */
 	public Stack getStack()
 	{
 		return stack;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "( " + currentState + ", " + inputTape + ", " + stack + ")";
+	}
+
+	/**
+	 * Setter method for currentState attribute.
+	 * @param currentState 
+	 */
+	public void setCurrentState(State currentState)
+	{
+		this.currentState = currentState;
 	}
 }

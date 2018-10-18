@@ -21,7 +21,7 @@ public class Symbol
 	};
 
 	/** Symbol */
-	Character	symbol;
+	String	symbol;
 	/** Type of the symbol */
 	SymbolType	type;
 
@@ -31,7 +31,7 @@ public class Symbol
 	 * @param symbol
 	 * @param type
 	 */
-	Symbol(Character symbol, SymbolType type)
+	public Symbol(String symbol, SymbolType type)
 	{
 		this.symbol = symbol;
 		this.type = type;
@@ -42,7 +42,7 @@ public class Symbol
 	 * 
 	 * @return symbol
 	 */
-	public Character getSymbol()
+	public String getSymbolRepresentation()
 	{
 		return symbol;
 	}
@@ -55,6 +55,12 @@ public class Symbol
 	public SymbolType getType()
 	{
 		return type;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return symbol;
 	}
 
 }

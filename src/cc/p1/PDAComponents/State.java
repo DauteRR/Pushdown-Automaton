@@ -11,18 +11,17 @@ package cc.p1.PDAComponents;
  * @version 1.0
  * @since 7 oct. 2018
  */
-public class State
+public class State implements Comparable<State>
 {
 	/** State identifier */
 	String	stateID;
-	/** Establishes if the state is an accepting state */
-	boolean	isAnAcceptingState;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param id
 	 *            state identifier
+	 * 
 	 */
 	public State(String id)
 	{
@@ -39,23 +38,15 @@ public class State
 		return stateID;
 	}
 
-	/**
-	 * Getter method for isAnAcceptingState attribute.
-	 * 
-	 * @return isAnAcceptingState
-	 */
-	public boolean isAnAcceptingState()
+	@Override
+	public int compareTo(State otherState)
 	{
-		return isAnAcceptingState;
+		return stateID.compareTo(otherState.stateID);
 	}
-
-	/**
-	 * Setter method for isAnAcceptingState attribute.
-	 * 
-	 * @param isAnAcceptingState
-	 */
-	public void setAnAcceptingState(boolean isAnAcceptingState)
+	
+	@Override
+	public String toString()
 	{
-		this.isAnAcceptingState = isAnAcceptingState;
+		return stateID;
 	}
 }

@@ -1,8 +1,0 @@
-# Comentarios
-q1 q2 q3 … # conjunto Q
-a1 a2 a3 … # conjunto Σ
-A1 A2 A3 … # conjunto Γ
-q1 # estado inicial
-A1 # símbolo inicial de la pila
-q2 q3 # conjunto F (sólo para APf)
-q1 a A1 q2 A A2 A3 # función de transición: (q2, A) ∈ δ (q1, a, A1)

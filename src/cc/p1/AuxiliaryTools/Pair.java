@@ -29,7 +29,7 @@ public class Pair<L, R>
 	/**
 	 * Getter method for the left object
 	 * 
-	 * @return Left method
+	 * @return Left object
 	 */
 	public L getLeft()
 	{
@@ -39,7 +39,7 @@ public class Pair<L, R>
 	/**
 	 * Getter method for the right object
 	 * 
-	 * @return Right method
+	 * @return Right object
 	 */
 	public R getRight()
 	{
@@ -64,4 +64,9 @@ public class Pair<L, R>
 				&& this.right.equals(pairObject.getRight());
 	}
 
+	@Override
+	public String toString()
+	{
+		return "(" + left + ", " + right + ")";
+	}
 }

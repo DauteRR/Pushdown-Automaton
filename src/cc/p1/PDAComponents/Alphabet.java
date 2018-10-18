@@ -4,6 +4,7 @@
 package cc.p1.PDAComponents;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 /**
@@ -14,7 +15,7 @@ import java.util.TreeSet;
  * @version 1.0
  * @since 7 oct. 2018
  */
-public class Alphabet
+public class Alphabet implements Iterable<Symbol>
 {
 	/** Set of symbols which compounds the alphabet */
 	TreeSet<Symbol> symbols;
@@ -34,11 +35,24 @@ public class Alphabet
 			@Override
 			public int compare(Symbol firstSymbol, Symbol secondSymbol)
 			{
-				return firstSymbol.getSymbol().compareTo(secondSymbol.getSymbol());
+				return firstSymbol.getSymbolRepresentation().compareTo(secondSymbol.getSymbolRepresentation());
 			}
 		};
 
 		symbols = new TreeSet<Symbol>(comparator);
+	}
+	
+	/**
+	 * Returns an specific symbol object
+	 * @param symbol Searched symbol
+	 * @return Symbol
+	 */
+	public Symbol getSymbol(String requiredSymbol)
+	{
+		for (Symbol symbol: symbols)
+			if (symbol.getSymbolRepresentation().equals(requiredSymbol))
+				return symbol;
+		throw new IllegalArgumentException("The alphabet doesn't contain the required symbol: " + requiredSymbol);
 	}
 
 	/**
@@ -77,4 +91,22 @@ public class Alphabet
 	{
 		return symbols.contains(symbol);
 	}
+	
+	@Override
+	public String toString()
+	{
+		String alphabet = "{ ";
+		for (Symbol symbol: symbols)
+		{
+			alphabet += symbol + ", ";
+		}
+		return alphabet.substring(0, alphabet.length() - 2) + "}";
+	}
+
+	@Override
+	public Iterator<Symbol> iterator()
+	{
+        return symbols.iterator();
+	}
 }
+

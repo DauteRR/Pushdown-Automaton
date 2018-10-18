@@ -3,6 +3,8 @@
  */
 package cc.p1.PDAComponents;
 
+import cc.p1.PushdownAutomaton;
+
 /**
  * Class which represents the input tape of a Pushdown Automata.
  * 
@@ -14,23 +16,39 @@ public class InputTape
 {
 	/** String that must be evaluated by the automaton */
 	Symbol[]	inputString;
-	/** Integer that specifies the position of the next symbol to be read */
+	/** Integer that specifies the position of the next symbol to be read.
+	 *  The value -1 specifies if the input string has been consumed or if
+	 *  the input string is empty */
 	int			inputTapeHeader	= -1;
+
+	/**
+	 * Constructor
+	 */
+	public InputTape()
+	{
+
+	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param inputString
-	 *            String that must be evaluated by the automaton
 	 */
 	public InputTape(Symbol[] inputString)
 	{
-		this.inputString = inputString;
-
-		if (this.inputString.length > 0)
+		if (inputString.length > 0) 
 		{
-			inputTapeHeader = 0;
+			this.inputString = inputString;
+			this.inputTapeHeader = 0;
 		}
+	}
+
+	public InputTape(InputTape inputTape)
+	{
+		this.inputString = new Symbol[inputTape.getInputString().length];
+		for (int i = 0; i < inputTape.getInputString().length; ++i)
+			this.inputString[i] = inputTape.getInputString()[i];
+		this.inputTapeHeader = inputTape.getInputTapeHeaderPosition();
 	}
 
 	/**
@@ -42,6 +60,18 @@ public class InputTape
 	{
 		return inputTapeHeader;
 	}
+	
+	/**
+	 * Getter method for inputString attribute.
+	 * @return inputString
+	 */
+	public String getInputStringRepresentation()
+	{
+		String inputStringRepresentation = "w = \"";
+		for (Symbol symbol: inputString)
+			inputStringRepresentation += symbol;
+		return inputStringRepresentation + "\"";
+	}
 
 	/**
 	 * Returns the symbol pointed by the input tap header
@@ -52,11 +82,7 @@ public class InputTape
 	{
 		if (inputTapeHeader == -1)
 		{
-			throw new IllegalArgumentException("Empty input string");
-		} else if (inputTapeHeader >= inputString.length)
-		{
-			throw new IllegalArgumentException(
-					"Input string has been consumed");
+			return PushdownAutomaton.EPSILON_SYMBOL;
 		} else
 		{
 			return inputString[inputTapeHeader];
@@ -66,14 +92,14 @@ public class InputTape
 	/**
 	 * Setter method for inputString attribute
 	 * 
-	 * @param inputString
+	 * @param inputString Array of symbols
 	 */
 	public void updateInputString(Symbol[] inputString)
 	{
 		this.inputString = inputString;
 		inputTapeHeader = (this.inputString.length > 0) ? 0 : -1;
 	}
-
+	
 	/**
 	 * Checks if the entire input string has been consumed.
 	 * 
@@ -83,9 +109,7 @@ public class InputTape
 	{
 		if (inputTapeHeader == -1)
 		{
-			throw new IllegalArgumentException("Empty input string");
-		} else if (inputTapeHeader >= inputString.length)
-		{
+			// We consider the empty string
 			return true;
 		} else
 		{
@@ -99,13 +123,44 @@ public class InputTape
 	public void consumeSymbol()
 	{
 		if (inputTapeHeader == -1)
-		{
-			throw new IllegalArgumentException("Empty input string");
-		} else if (inputTapeHeader >= inputString.length)
-		{
-			throw new IllegalArgumentException(
-					"Input string has been consumed");
-		}
+			return;
 		inputTapeHeader++;
+		if  (inputTapeHeader >= inputString.length)
+			inputTapeHeader = -1;
+	}
+
+	@Override
+	public String toString()
+	{
+		String inputTape = "";
+		for (int i = 0; i < inputString.length; ++i)
+		{
+			if (i == inputTapeHeader)
+				inputTape += ">";
+			inputTape += inputString[i];
+		}
+		if (inputTapeHeader == -1)
+			inputTape += ">";
+		inputTape += PushdownAutomaton.EPSILON_SYMBOL;
+
+		return inputTape;
+	}
+
+	/**
+	 * Setter method for inputString attribute.
+	 * @param inputString 
+	 */
+	public void setInputString(Symbol[] inputString)
+	{
+		this.inputString = inputString;
+	}
+
+	/**
+	 * Getter method for inputString attribute.
+	 * @return inputString
+	 */
+	public Symbol[] getInputString()
+	{
+		return inputString;
 	}
 }

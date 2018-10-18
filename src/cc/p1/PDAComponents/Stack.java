@@ -3,6 +3,8 @@
  */
 package cc.p1.PDAComponents;
 
+import cc.p1.PushdownAutomaton;
+
 /**
  * Class which represents the stack of the Pushdown Automaton.
  * 
@@ -25,6 +27,18 @@ public class Stack extends java.util.Stack<Symbol>
 	}
 
 	/**
+	 * Copy constructor
+	 * @param stack
+	 */
+	public Stack(Stack stack)
+	{
+		for(Symbol symbol: stack)
+		{
+			push(symbol);
+		}
+	}
+
+	/**
 	 * Introduces a new symbol on the stack checking if is a non terminal
 	 * symbol.
 	 * 
@@ -34,10 +48,11 @@ public class Stack extends java.util.Stack<Symbol>
 	public Symbol push(Symbol newSymbol)
 	{
 		if (newSymbol.type != Symbol.SymbolType.NON_TERMINAL)
-		{
 			throw new IllegalArgumentException(
 					"Trying to add a terminal symbol to the stack");
-		}
+		
+		if (newSymbol.equals(PushdownAutomaton.EPSILON_SYMBOL))
+			return PushdownAutomaton.EPSILON_SYMBOL;
 
 		return super.push(newSymbol);
 	}
@@ -52,4 +67,5 @@ public class Stack extends java.util.Stack<Symbol>
 	{
 		// Do nothing
 	}
+	
 }

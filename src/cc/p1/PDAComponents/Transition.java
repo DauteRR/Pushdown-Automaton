@@ -3,6 +3,10 @@
  */
 package cc.p1.PDAComponents;
 
+import java.util.ArrayList;
+
+import cc.p1.PushdownAutomaton;
+
 /**
  * Class which represents a transition of a Pushdown Automaton. Each transition
  * is compound by 5 elements which identifies it.
@@ -11,20 +15,20 @@ package cc.p1.PDAComponents;
  * @version 1.0
  * @since 7 oct. 2018
  */
-public class Transition
+public class Transition implements Comparable<Transition>
 {
 	/** Origin state of the transition */
-	State		originState;
+	State				originState;
 	/** Destination state of the transition */
-	State		destinationState;
+	State				destinationState;
 	/** Input symbol required. */
-	Symbol		inputSymbol;
+	Symbol				inputSymbol;
 	/** Top stack symbol required */
-	Symbol		requiredTopStackSymbol;
+	Symbol				requiredTopStackSymbol;
 	/** Stack symbols to introduce */
-	Symbol[]	newTopStackSymbols;
+	ArrayList<Symbol>	newTopStackSymbols;
 	/** Identifies each transition */
-	int transitionID;
+	int					transitionID;
 
 	/**
 	 * Constructor
@@ -37,30 +41,45 @@ public class Transition
 	 */
 	public Transition(State originState, State destinationState,
 			Symbol inputSymbol, Symbol topStackSymbol,
-			Symbol[] newTopStackSymbols, int transitionID)
+			ArrayList<Symbol> newTopStackSymbols, int transitionID)
 	{
-		if (inputSymbol.getType() != Symbol.SymbolType.TERMINAL)
+
+		if (inputSymbol.getType() != Symbol.SymbolType.TERMINAL
+				&& !inputSymbol.equals(PushdownAutomaton.EPSILON_SYMBOL))
 		{
-			throw new IllegalArgumentException("The input symbol must be terminal");
-		} else if (requiredTopStackSymbol.getType() != Symbol.SymbolType.NON_TERMINAL)
+			throw new IllegalArgumentException(
+					"The input symbol must be terminal");
+		} else if (topStackSymbol.getType() != Symbol.SymbolType.NON_TERMINAL)
 		{
-			throw new IllegalArgumentException("The required top stack symbol must be non terminal");
+			throw new IllegalArgumentException(
+					"The required top stack symbol must be non terminal");
 		}
-		
-		for(Symbol symbol: newTopStackSymbols)
+
+		for (Symbol symbol : newTopStackSymbols)
 		{
 			if (symbol.getType() != Symbol.SymbolType.NON_TERMINAL)
 			{
-				throw new IllegalArgumentException("The new top stack symbols must be non terminal");
+				throw new IllegalArgumentException(
+						"The new top stack symbols must be non terminal");
 			}
 		}
-		
+
 		this.originState = originState;
 		this.destinationState = destinationState;
 		this.inputSymbol = inputSymbol;
 		this.requiredTopStackSymbol = topStackSymbol;
 		this.newTopStackSymbols = newTopStackSymbols;
 		this.transitionID = transitionID;
+	}
+
+	/**
+	 * Getter method for transitionID attribute.
+	 * 
+	 * @return transitionID
+	 */
+	public int getTransitionID()
+	{
+		return transitionID;
 	}
 
 	/**
@@ -108,9 +127,29 @@ public class Transition
 	 * 
 	 * @return newTopStackSymbols
 	 */
-	public Symbol[] getNewTopStackSymbols()
+	public ArrayList<Symbol> getNewTopStackSymbols()
 	{
 		return newTopStackSymbols;
+	}
+
+	@Override
+	public int compareTo(Transition otherTransition)
+	{
+		Integer firstID = Integer.valueOf(transitionID);
+		Integer secondID = Integer.valueOf(otherTransition.getTransitionID());
+
+		return firstID.compareTo(secondID);
+	}
+	
+	@Override
+	public String toString()
+	{
+		String transition = "(" + originState + ", " + inputSymbol + ", " + requiredTopStackSymbol + ", " + destinationState + ", ";
+		for(Symbol symbol: newTopStackSymbols)
+		{
+			transition += symbol + " ";
+		}
+		return transition.substring(0, transition.length() - 1) + ")";
 	}
 
 }
