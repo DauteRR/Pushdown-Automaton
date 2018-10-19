@@ -51,12 +51,12 @@ class PDATest
 		Symbol[] string6 = {pda1.getInputAlphabet().getSymbol("a"), pda1.getInputAlphabet().getSymbol("a"),
 							pda1.getInputAlphabet().getSymbol("a"), pda1.getInputAlphabet().getSymbol("a")};
 		
-		assertTrue(pda1.simulate(string1));
-		assertFalse(pda1.simulate(string2));
-		assertFalse(pda1.simulate(string3));
-		assertFalse(pda1.simulate(string4));
-		assertTrue(pda1.simulate(string5));
-		assertFalse(pda1.simulate(string6));
+		assertTrue(pda1.simulate(string1, false));
+		assertFalse(pda1.simulate(string2, false));
+		assertFalse(pda1.simulate(string3, false));
+		assertFalse(pda1.simulate(string4, false));
+		assertTrue(pda1.simulate(string5, false));
+		assertFalse(pda1.simulate(string6, false));
 	}
 	
 	@Test
@@ -75,11 +75,11 @@ class PDATest
 							pda2.getInputAlphabet().getSymbol("1"), pda2.getInputAlphabet().getSymbol("1"),
 							pda2.getInputAlphabet().getSymbol("1")};
 		
-		assertTrue(pda2.simulate(string1));
-		assertTrue(pda2.simulate(string2));
-		assertFalse(pda2.simulate(string3));
-		assertFalse(pda2.simulate(string4));
-		assertFalse(pda2.simulate(string5));
+		assertTrue(pda2.simulate(string1, false));
+		assertTrue(pda2.simulate(string2, false));
+		assertFalse(pda2.simulate(string3, false));
+		assertFalse(pda2.simulate(string4, false));
+		assertFalse(pda2.simulate(string5, false));
 	}
 
 }

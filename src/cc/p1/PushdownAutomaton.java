@@ -49,6 +49,15 @@ public class PushdownAutomaton
 	/** Epsilon symbol. */
 	public static final Symbol							EPSILON_SYMBOL	= new Symbol(
 			".", Symbol.SymbolType.NON_TERMINAL);
+	
+	/** Needed for the trace mode */
+	final int STATES_COLUMN_MAX_SPACES = 20;
+	/** Needed for the trace mode */
+	final int INPUT_COLUMN_MAX_SPACES = 25;
+	/** Needed for the trace mode */
+	final int STACK_COLUMN_MAX_SPACES = 25;
+	/** Needed for the trace mode */
+	final int TRANSITION_COLUMN_MAX_SPACES = 25;
 
 	/**
 	 * @param states
@@ -77,17 +86,80 @@ public class PushdownAutomaton
 		this.stack = new Stack(initialStackSymbol);
 	}
 
-	public void startSimulation(Symbol[] inputString)
+	/**
+	 * Interface for the simulate method
+	 * 
+	 * @param traceMode Specifies if the program must show the simulation steps
+	 */
+	public void startSimulation(boolean traceMode)
 	{
-
-		System.out.println(inputTape.getInputStringRepresentation() + " ∈ L ?");
-		if (simulate(inputString))
+		
+		if (!traceMode)
+			System.out.println("\n" + inputTape.getInputStringRepresentation() + " ∈ L ?\n");
+		
+		if (traceMode)
+		{
+			String header = "\nStates";
+			for (int i = 0; i < STATES_COLUMN_MAX_SPACES - 6; ++i)
+				header += " ";
+			header += "Input";
+			for (int i = 0; i < INPUT_COLUMN_MAX_SPACES - 5; ++i)
+				header += " ";
+			header += "Stack";
+			for (int i = 0; i < STACK_COLUMN_MAX_SPACES - 5; ++i)
+				header += " ";
+			header += "Transitions";
+			for (int i = 0; i < TRANSITION_COLUMN_MAX_SPACES - 11; ++i)
+				header += " ";
+			
+			header += "\n";
+			int size = header.length();
+			for (int i = 0; i < size; ++i)
+				header += "_";
+			
+			System.out.println(header);
+		}
+		
+		boolean accepted = simulate(inputTape.getInputString(), traceMode);
+		
+		if (!traceMode && accepted)
 			System.out.println("w ∈ L");
-		else
+		else if (!traceMode)
 			System.out.println("w ∉ L");
 	}
+	
+	/**
+	 * Method needed by the trace mode simulation mode.
+	 * 
+	 * @param pdaDescription
+	 * @param currentTransition
+	 */
+	private void traceMode(String state, String input, String stack, String transition)
+	{
+		String line = state;
+		for (int i = 0; i < STATES_COLUMN_MAX_SPACES - state.length(); ++i)
+			line += " ";
+		
+		line += input;
+		for (int i = 0; i < INPUT_COLUMN_MAX_SPACES - input.length(); ++i)
+			line += " ";
+		line += stack;
+		
+		for (int i = 0; i < STACK_COLUMN_MAX_SPACES - stack.length(); ++i)
+			line += " ";
+		line += transition + "\n";
+		
+		System.out.println(line);
+	}
 
-	public boolean simulate(Symbol[] inputString)
+	/**
+	 * Simulates the behavior of the PDA with the input string given.
+	 * 
+	 * @param inputString
+	 * @param traceMode Specifies if the program must show the simulation steps
+	 * @return True if the language accepts the string, false otherwise.
+	 */
+	public boolean simulate(Symbol[] inputString, boolean traceMode)
 	{
 		// Reset PDA components
 		this.inputTape.updateInputString(inputString);
@@ -103,12 +175,14 @@ public class PushdownAutomaton
 		// if the language accepts the input string, the simulations stops
 		while (!unexploredBranches.isEmpty())
 		{
+			
 			// The local variables which defines the current state of the PDA are updated
 			PDADescription pdaDescription = unexploredBranches.peek().getRight();
 			Transition currentTransition = unexploredBranches.peek().getLeft();
 			unexploredBranches.pop();
 			
-			System.out.println(pdaDescription.getCurrentState() + "    " + pdaDescription.getInputTape() + "    " + pdaDescription.getStack() + "    " + currentTransition.getTransitionID() + " " + currentTransition);
+			if (traceMode)
+				traceMode(currentTransition.getOriginState() + "", pdaDescription.getInputTape() + "", pdaDescription.getStack() + "", currentTransition.toString() + " " + currentTransition.getTransitionID());
 			
 			// Stack update
 			if (currentTransition.getNewTopStackSymbols().size() == 1 &&
@@ -127,6 +201,10 @@ public class PushdownAutomaton
 				acceptingStates.contains(currentTransition.getDestinationState())) 
 			{
 				// The language accepts the input string
+				if (traceMode)
+				{
+					traceMode(currentTransition.getDestinationState() + "", pdaDescription.getInputTape() + "", pdaDescription.getStack() + "", "w ∈ L");
+				}
 				return true;
 			} else
 			{
@@ -141,8 +219,18 @@ public class PushdownAutomaton
 				// Introduce the new unexplored branches in the unexplored branches stack
 				for(Transition transition: getPossibleTransitions(newState, newInputSymbol, newTopStackSymbol))
 					unexploredBranches.push(new Pair<>(transition, new PDADescription(newState, new InputTape(pdaDescription.getInputTape()), new Stack(pdaDescription.getStack()))));
-			}
 				
+				if (traceMode && getPossibleTransitions(newState, newInputSymbol, newTopStackSymbol).size() == 0)
+				{
+					String separator = "\n";
+					for (int i = 0; i < STATES_COLUMN_MAX_SPACES + 
+							STACK_COLUMN_MAX_SPACES + INPUT_COLUMN_MAX_SPACES + 
+							TRANSITION_COLUMN_MAX_SPACES; ++i)
+						separator += "-";
+					
+					traceMode(currentTransition.getDestinationState() + "", pdaDescription.getInputTape() + "", pdaDescription.getStack() + "", "w ∉ L" + separator);
+				}
+			}
 		}
 		
 		return false;
