@@ -2,7 +2,7 @@
 A **pushdown automaton (PDA)** is a type of automaton that employs a stack. Pushdown automata are used in theories about what can be computed by machines. They are more capable than finite-state machines but less capable than Turing machines. Deterministic pushdown automata can recognize all deterministic context-free languages while nondeterministic ones can recognize all context-free languages, with the former often used in parser design.
 
 A **PDA is formally defined as a 7-tuple**:
-*TM = (Q, Σ, Γ, δ, s, Z, F)*
+*PDA = (Q, Σ, Γ, δ, s, Z, F)*
 * Q: Finite set of states
 * Σ: Input alphabet, compound by terminal symbols
 * Γ: Stack alphabet, compound by non terminal symbols
