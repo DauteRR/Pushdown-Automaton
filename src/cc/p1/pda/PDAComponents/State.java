@@ -1,7 +1,7 @@
 /**
  * File containing the State entity definition. 
  */
-package cc.p1.PDAComponents;
+package cc.p1.pda.PDAComponents;
 
 /**
  * Class which represents a state of a Pushdown Automaton. The state can be an

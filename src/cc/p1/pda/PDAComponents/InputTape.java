@@ -1,9 +1,9 @@
 /**
  * File containing the InputTape entity definition. 
  */
-package cc.p1.PDAComponents;
+package cc.p1.pda.PDAComponents;
 
-import cc.p1.PushdownAutomaton;
+import cc.p1.pda.PushdownAutomaton;
 
 /**
  * Class which represents the input tape of a Pushdown Automata.

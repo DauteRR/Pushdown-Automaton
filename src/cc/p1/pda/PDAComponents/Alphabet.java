@@ -1,7 +1,7 @@
 /**
  * File containing the Alphabet entity definition. 
  */
-package cc.p1.PDAComponents;
+package cc.p1.pda.PDAComponents;
 
 import java.util.Comparator;
 import java.util.Iterator;

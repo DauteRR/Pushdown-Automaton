@@ -1,7 +1,7 @@
 /**
  * File containing the PDATest entity definition. 
  */
-package cc.p1.test;
+package cc.p1.pda.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,9 +9,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import cc.p1.PushdownAutomaton;
-import cc.p1.AuxiliaryTools.PDAParser;
-import cc.p1.PDAComponents.Symbol;
+import cc.p1.pda.PushdownAutomaton;
+import cc.p1.pda.AuxiliaryTools.PDAParser;
+import cc.p1.pda.PDAComponents.Symbol;
 
 /**
  * @author Daute Rodríguez Rodríguez (alu0100973914@ull.edu.es)

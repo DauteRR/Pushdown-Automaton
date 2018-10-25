@@ -1,11 +1,11 @@
 /**
  * File containing the Transition entity definition. 
  */
-package cc.p1.PDAComponents;
+package cc.p1.pda.PDAComponents;
 
 import java.util.ArrayList;
 
-import cc.p1.PushdownAutomaton;
+import cc.p1.pda.PushdownAutomaton;
 
 /**
  * Class which represents a transition of a Pushdown Automaton. Each transition

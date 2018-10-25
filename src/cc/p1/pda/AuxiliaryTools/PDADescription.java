@@ -1,11 +1,11 @@
 /**
  * File containing the PushdownAutomatonDescription entity definition. 
  */
-package cc.p1.AuxiliaryTools;
+package cc.p1.pda.AuxiliaryTools;
 
-import cc.p1.PDAComponents.InputTape;
-import cc.p1.PDAComponents.Stack;
-import cc.p1.PDAComponents.State;
+import cc.p1.pda.PDAComponents.InputTape;
+import cc.p1.pda.PDAComponents.Stack;
+import cc.p1.pda.PDAComponents.State;
 
 /**
  * Class which represents the configuration of a Pushdown Automaton at a

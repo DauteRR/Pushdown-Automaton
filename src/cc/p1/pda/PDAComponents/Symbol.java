@@ -1,7 +1,7 @@
 /**
  * File containing the Symbol entity definition. 
  */
-package cc.p1.PDAComponents;
+package cc.p1.pda.PDAComponents;
 
 /**
  * Class which represents a symbol of a Pushdown Automaton alphabet. The symbol

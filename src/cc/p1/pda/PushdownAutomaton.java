@@ -1,19 +1,19 @@
 /**
  * File containing the PushdownAutomaton entity definition. 
  */
-package cc.p1;
+package cc.p1.pda;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import cc.p1.AuxiliaryTools.PDADescription;
-import cc.p1.AuxiliaryTools.Pair;
-import cc.p1.PDAComponents.Alphabet;
-import cc.p1.PDAComponents.InputTape;
-import cc.p1.PDAComponents.Stack;
-import cc.p1.PDAComponents.State;
-import cc.p1.PDAComponents.Symbol;
-import cc.p1.PDAComponents.Transition;
+import cc.p1.pda.AuxiliaryTools.PDADescription;
+import cc.p1.pda.AuxiliaryTools.Pair;
+import cc.p1.pda.PDAComponents.Alphabet;
+import cc.p1.pda.PDAComponents.InputTape;
+import cc.p1.pda.PDAComponents.Stack;
+import cc.p1.pda.PDAComponents.State;
+import cc.p1.pda.PDAComponents.Symbol;
+import cc.p1.pda.PDAComponents.Transition;
 
 /**
  * Class which represents a Pushdown Automaton. A PDA is formally defined as a
@@ -58,6 +58,8 @@ public class PushdownAutomaton
 	final int STACK_COLUMN_MAX_SPACES = 25;
 	/** Needed for the trace mode */
 	final int TRANSITION_COLUMN_MAX_SPACES = 25;
+	/** Needed for the trace mode */
+	ArrayList<Transition> possibleTransitions = new ArrayList<>();
 
 	/**
 	 * @param states
@@ -167,8 +169,10 @@ public class PushdownAutomaton
 		this.stack.clear();
 		this.stack.push(initialStackSymbol);
 		
+		possibleTransitions = getPossibleTransitions(initialState, inputTape.getCurrentSymbol(), initialStackSymbol);
+		
 		// The initial unexplored branches are introduced in the unexplored branches stack
-		for(Transition transition: getPossibleTransitions(initialState, inputTape.getCurrentSymbol(), initialStackSymbol))
+		for(Transition transition: possibleTransitions)
 			unexploredBranches.push(new Pair<>(transition, new PDADescription(initialState, new InputTape(inputTape), new Stack(stack))));
 		
 		// While exists at least one unexplored branch the PDA continues its simulation,
@@ -182,8 +186,19 @@ public class PushdownAutomaton
 			unexploredBranches.pop();
 			
 			if (traceMode)
-				traceMode(currentTransition.getOriginState() + "", pdaDescription.getInputTape() + "", pdaDescription.getStack() + "", currentTransition.toString() + " " + currentTransition.getTransitionID());
-			
+			{
+				String transitions = "";
+				for (Transition transition: possibleTransitions)
+				{
+					transitions += transition.toString() + " ";
+				}
+				if (possibleTransitions.size() == 0)
+				{
+					transitions = currentTransition.toString() + " ";
+				}
+				traceMode(currentTransition.getOriginState() + "", pdaDescription.getInputTape() + "", pdaDescription.getStack() + "", transitions + "*");
+			}
+				
 			// Stack update
 			if (currentTransition.getNewTopStackSymbols().size() == 1 &&
 				currentTransition.getNewTopStackSymbols().get(0).equals(pdaDescription.getStack().peek()))
@@ -215,9 +230,10 @@ public class PushdownAutomaton
 				Symbol newInputSymbol = pdaDescription.getInputTape().getCurrentSymbol();
 				State newState = currentTransition.getDestinationState();
 				Symbol newTopStackSymbol = pdaDescription.getStack().peek();
+				possibleTransitions = getPossibleTransitions(newState, newInputSymbol, newTopStackSymbol);
 				
 				// Introduce the new unexplored branches in the unexplored branches stack
-				for(Transition transition: getPossibleTransitions(newState, newInputSymbol, newTopStackSymbol))
+				for(Transition transition: possibleTransitions)
 					unexploredBranches.push(new Pair<>(transition, new PDADescription(newState, new InputTape(pdaDescription.getInputTape()), new Stack(pdaDescription.getStack()))));
 				
 				if (traceMode && getPossibleTransitions(newState, newInputSymbol, newTopStackSymbol).size() == 0)

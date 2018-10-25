@@ -1,7 +1,7 @@
 /**
  * File containing the PDAParser entity definition. 
  */
-package cc.p1.AuxiliaryTools;
+package cc.p1.pda.AuxiliaryTools;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import cc.p1.PushdownAutomaton;
-import cc.p1.PDAComponents.Alphabet;
-import cc.p1.PDAComponents.State;
-import cc.p1.PDAComponents.Symbol;
-import cc.p1.PDAComponents.Transition;
+import cc.p1.pda.PushdownAutomaton;
+import cc.p1.pda.PDAComponents.Alphabet;
+import cc.p1.pda.PDAComponents.State;
+import cc.p1.pda.PDAComponents.Symbol;
+import cc.p1.pda.PDAComponents.Transition;
 
 /**
  * Class which parses a configuration file and creates a PDA object.

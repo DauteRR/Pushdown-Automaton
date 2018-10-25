@@ -1,4 +1,4 @@
-package cc.p1.AuxiliaryTools;
+package cc.p1.pda.AuxiliaryTools;
 
 /**
  * Auxiliary class to store two kind of objects.

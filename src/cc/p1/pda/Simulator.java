@@ -1,15 +1,15 @@
 /**
  * File containing the Simulator entity definition.
  */
-package cc.p1;
+package cc.p1.pda;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import cc.p1.AuxiliaryTools.PDAParser;
-import cc.p1.PDAComponents.Symbol;
+import cc.p1.pda.AuxiliaryTools.PDAParser;
+import cc.p1.pda.PDAComponents.Symbol;
 
 /**
  * Class which constructs and starts the simulation of the PDA.
